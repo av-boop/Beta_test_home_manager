@@ -4,12 +4,12 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const householdMembersRouter = require('../src/routers/householdMembers.router');
-
+const tasksRouter = require('./routers/tasks.router');
 app.use(cors());
 app.use(express.json());
 
 app.use('/household-members', householdMembersRouter);
-
+app.use('/tasks', tasksRouter);
 app.use((req, res, next) => {
   next({ status: 404, message: `Path not found: ${req.originalUrl}` });
 });

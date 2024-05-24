@@ -1,33 +1,33 @@
 const knex = require('../db/connection');
 
-const getAllIncompleteTasks = () => {
-    return knex('tasks')
-        .where('status', '!=', 'completed')
-        .orderBy('due_date', 'asc');
-};
+async function getAllIncompleteTasks() {
+    return await knex('tasks').whereNull('completed_at').select('*');
+}
 
-const getTask = (id) => {
-    return knex('tasks').where({ id }).first();
-};
+async function getTask(id) {
+    return await knex('tasks').where({ id }).first();
+}
 
-const createTask = (task) => {
-    return knex('tasks')
-        .insert(task)
-        .returning('*')
-        .then((rows) => rows[0]);
-};
+async function createTask(taskData) {
+    return await knex('tasks').insert(taskData).returning('*');
+}
 
-const updateTask = (id, updatedTask) => {
-    return knex('tasks')
-        .where({ id })
-        .update(updatedTask)
-        .returning('*')
-        .then((rows) => rows[0]);
-};
+async function validateMemberId(memberId) {
+    const member = await knex('household_members').where({ id: memberId }).first();
+    return !!member; // Returns true if member exists, false otherwise
+}
+
+async function updateTaskAssignment(taskId, memberId) {
+    return await knex('tasks')
+        .where({ id: taskId })
+        .update({ assigned_to_member_id: memberId })
+        .returning('*');
+}
 
 module.exports = {
     getAllIncompleteTasks,
     getTask,
     createTask,
-    updateTask,
+    validateMemberId,
+    updateTaskAssignment,
 };

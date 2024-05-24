@@ -48,23 +48,34 @@ async function createTask(req, res, next) {
     }
 }
 
-async function updateTask(req, res, next) {
+async function assignTaskToMember(req, res, next) {
     try {
-        const { id } = req.params;
-        const { data = {} } = req.body;
-        const updatedTask = await service.updateTask(id, data);
-        if (!updatedTask) {
-            return res.status(404).json({ error: `Task with id ${id} not found` });
+        const { id, member_id } = req.params;
+
+        // Check if the task ID exists
+        const taskExists = await service.getTask(id);
+        if (!taskExists) {
+            return res.status(404).json({ error: 'Task not found' });
         }
+
+        // Check if the member ID exists
+        const memberExists = await service.validateMemberId(member_id);
+        if (!memberExists) {
+            return res.status(404).json({ error: 'Household member not found' });
+        }
+
+        // Update task's assigned member
+        const updatedTask = await service.updateTaskAssignment(id, member_id);
         res.json({ data: updatedTask });
     } catch (err) {
         next(err);
     }
 }
 
+
 module.exports = {
     getAllIncompleteTasks,
     getTask,
     createTask,
-    updateTask,
+    assignTaskToMember,
 };

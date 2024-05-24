@@ -3,7 +3,7 @@ const path = require("path");
 const { parse } = require("pg-connection-string");
 
 const {
-  DATABASE_URL = "postgres://luoqolsc:jIbVmmrjvx-6ILBhbVCkR-AejXgIUq2Q@chunee.db.elephantsql.com/luoqolsc",
+    DATABASE_URL = "postgresql://postgres@localhost/postgres",
   DEBUG,
 } = process.env;
 

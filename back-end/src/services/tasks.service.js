@@ -20,9 +20,20 @@ function create(data) {
     .then((created) => created[0]);
 }
 
+function updateTaskToCompleted(id) {
+  return knex(tableName)
+    .where({ id })
+    .update({ completed: true })
+    .returning("*")
+    .then((rows) => rows[0]);
+}
+
+
 
 module.exports = {
   read,
   assignTask,
   create,
+  updateTaskToCompleted,
+
 };

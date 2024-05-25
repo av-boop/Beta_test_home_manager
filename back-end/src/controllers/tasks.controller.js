@@ -46,9 +46,39 @@ async function create(req, res, next) {
   const response = await service.create(req.body.data);
   res.status(201).json({ data: response });
 }
+async function updateTaskToCompleted(req, res, next) {
+  try {
+    const { id } = req.params;
+    const findTask = await service.read(id);
+    if (!findTask) {
+      return next({
+        status: 404,
+        message: `Task with ID ${id} not found.`,
+      });
+    }
+    const data = await service.updateTaskToCompleted(id);
+    res.status(201).json({ data });
+  } catch (error) {
+    next(error);
+  }
+}
+async function hasValidTaskId(req, res, next) {
+  const { id } = req.params;
+  const findTask = await service.read(id);
+  if (!findTask) {
+    return next({ status: 404, message: `Task with ID ${id} not found.` });
+  } else {
+    res.locals.findTask = findTask;
+    next();
+  }
+}
 
-
+function read(req, res, next) {
+  res.json({ data: res.locals.findTask });
+}
 module.exports = {
   assignTaskToMember,
   create: [hasValidData, create],
+  updateTaskToCompleted,
+  read: [hasValidTaskId, read],
 };

@@ -56,6 +56,7 @@ describe("US-03 - Assigning tasks to users", () => {
             // than the member_name
           },
         });
+
       let response = await request(app)
         .post(
           `/tasks/${taskCreationResponse.body.data.id}/assign/${householdMemberCreationResponse.body.data.id}`

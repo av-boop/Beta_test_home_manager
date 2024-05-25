@@ -28,6 +28,12 @@ function updateTaskToCompleted(id) {
     .then((rows) => rows[0]);
 }
 
+function list() {
+  return knex(tableName).select("*");
+}
+function filteredList(param) {
+  return knex(tableName).select("*").where({ completed: param });
+}
 
 
 module.exports = {
@@ -35,5 +41,8 @@ module.exports = {
   assignTask,
   create,
   updateTaskToCompleted,
+  list,
+  filteredList
+
 
 };

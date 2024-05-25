@@ -1,6 +1,5 @@
-
 const service = require("../services/tasks.service");
-const householdService=require("../services/householdMembers.service")
+const householdService = require("../services/householdMembers.service");
 
 async function assignTaskToMember(req, res, next) {
   const { id, member_id } = req.params;
@@ -19,7 +18,6 @@ async function assignTaskToMember(req, res, next) {
   const updatedTask = await service.assignTask(id, member_id);
   res.status(201).json({ data: updatedTask });
 }
-
 
 async function hasValidData(req, res, next) {
   const { data = {} } = req.body;
@@ -76,9 +74,22 @@ async function hasValidTaskId(req, res, next) {
 function read(req, res, next) {
   res.json({ data: res.locals.findTask });
 }
+
+async function list(req, res) {
+  if (req.query.complete !== undefined) {
+    const { complete } = req.query;
+    const tasks = await service.filteredList(complete);
+    res.json({ data: tasks });
+  } else {
+    const tasks = await service.list();
+    res.json({ data: tasks });
+  }
+}
+
 module.exports = {
   assignTaskToMember,
   create: [hasValidData, create],
   updateTaskToCompleted,
   read: [hasValidTaskId, read],
+  list,
 };

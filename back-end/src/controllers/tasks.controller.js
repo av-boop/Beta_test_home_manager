@@ -86,10 +86,12 @@ async function list(req, res) {
   }
 }
 
+
 module.exports = {
   assignTaskToMember,
   create: [hasValidData, create],
   updateTaskToCompleted,
   read: [hasValidTaskId, read],
   list,
+ 
 };

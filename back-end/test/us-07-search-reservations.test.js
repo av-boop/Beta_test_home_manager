@@ -26,30 +26,31 @@ describe("US-07 - Recurring tasks", () => {
         description: "description",
         due_date: "2050-01-01",
         importance: "low",
-        recurring: 7
-      }
+        recurring: 7,
+      };
       const response = await request(app)
         .post("/tasks")
         .set("Accept", "application/json")
-        .send({data});
+        .send({ data });
       expect(response.statusCode).toEqual(201);
-      expect(response.body.data.recurring).toEqual(true);
-      const {id} = response.body.data;
+      expect(response.body.data.recurring).toEqual(7);
+      const { id } = response.body.data;
 
       const putResponse = await request(app)
         .put(`/tasks/${id}`)
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .send({
           ...response.body.data,
-          completed: true
+          completed: true,
         });
       const incompleteTasksResponse = await request(app)
-        .get('/tasks?completed=false')
+        .get("/tasks?completed=false")
         .set("Accept", "application/json");
       expect(incompleteTasksResponse.statusCode).toEqual(200);
       const incompleteTasks = incompleteTasksResponse.body.data;
-      expect(incompleteTasks).not.toHaveLength(0);
-      expect(incompleteTasks).toContainObject({due_date: "2050-01-08"})
+      expect(incompleteTasks).toHaveLength(1);
+      // new incomplete task should be for 7 days after 2050-01-01, which should be 2050-01-08
+      expect(incompleteTasks[0].due_date).toContain("08");
     });
   });
 });

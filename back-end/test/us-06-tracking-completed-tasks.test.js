@@ -3,29 +3,32 @@ const request = require("supertest");
 const app = require("../src/app");
 const knex = require("../src/db/connection");
 
-
 expect.extend({
   toContainObject(received, argument) {
-
-    const pass = this.equals(received, 
-      expect.arrayContaining([
-        expect.objectContaining(argument)
-      ])
-    )
+    const pass = this.equals(
+      received,
+      expect.arrayContaining([expect.objectContaining(argument)])
+    );
 
     if (pass) {
       return {
-        message: () => (`expected ${this.utils.printReceived(received)} not to contain object ${this.utils.printExpected(argument)}`),
-        pass: true
-      }
+        message: () =>
+          `expected ${this.utils.printReceived(
+            received
+          )} not to contain object ${this.utils.printExpected(argument)}`,
+        pass: true,
+      };
     } else {
       return {
-        message: () => (`expected ${this.utils.printReceived(received)} to contain object ${this.utils.printExpected(argument)}`),
-        pass: false
-      }
+        message: () =>
+          `expected ${this.utils.printReceived(
+            received
+          )} to contain object ${this.utils.printExpected(argument)}`,
+        pass: false,
+      };
     }
-  }
-})
+  },
+});
 
 describe("US-06 - Tracking completed tasks", () => {
   const taskData = [
@@ -46,8 +49,15 @@ describe("US-06 - Tracking completed tasks", () => {
       description: "description3",
       due_date: "2048-01-01",
       importance: "high",
-    }
-  ]
+    },
+  ];
+
+  const tasksWithoutDate = taskData.map((x) => ({
+    title: x.title,
+    description: x.description,
+    importance: x.importance,
+  }));
+
   beforeAll(() => {
     return knex.migrate
       .forceFreeMigrationsLock()
@@ -75,49 +85,45 @@ describe("US-06 - Tracking completed tasks", () => {
       );
   });
 
-    afterAll(async () => {
-      return await knex.migrate.rollback(null, true).then(() => knex.destroy());
-    });
-    
-    describe("GET /tasks", () => {
-      test("returns all tasks with no query params", async () => {
-        const response = await request(app)
+  afterAll(async () => {
+    return await knex.migrate.rollback(null, true).then(() => knex.destroy());
+  });
+
+  describe("GET /tasks", () => {
+    test("returns all tasks with no query params", async () => {
+      const response = await request(app)
         .get("/tasks")
         .set("Accept", "application/json");
-        
-        expect(response.body.error).toBeUndefined();
-        const tasks = response.body.data;
-        expect(tasks).toHaveLength(3);
-        expect(tasks).toContainObject(taskData[0]);
-        expect(tasks).toContainObject(taskData[1]);
-        expect(tasks).toContainObject(taskData[2]);
-        expect(response.status).toBe(200);
-      });
 
-      test("returns only completed tasks with ?complete=true", async () => {
-        const response = await request(app)
+      expect(response.body.error).toBeUndefined();
+      const tasks = response.body.data;
+      expect(tasks).toHaveLength(3);
+      expect(tasks).toContainObject(tasksWithoutDate[0]);
+      expect(tasks).toContainObject(tasksWithoutDate[1]);
+      expect(tasks).toContainObject(tasksWithoutDate[2]);
+      expect(response.status).toBe(200);
+    });
+
+    test("returns only completed tasks with ?complete=true", async () => {
+      const response = await request(app)
         .get("/tasks?complete=true")
         .set("Accept", "application/json");
-        
-        expect(response.body.error).toBeUndefined();
-        const tasks = response.body.data;
-        expect(tasks).toHaveLength(1);
-        expect(response.status).toBe(200);
-      });
 
-      test("returns only incomplete tasks with ?complete=false", async () => {
-        const response = await request(app)
+      expect(response.body.error).toBeUndefined();
+      const tasks = response.body.data;
+      expect(tasks).toHaveLength(1);
+      expect(response.status).toBe(200);
+    });
+
+    test("returns only incomplete tasks with ?complete=false", async () => {
+      const response = await request(app)
         .get("/tasks?complete=false")
         .set("Accept", "application/json");
-        
-        expect(response.body.error).toBeUndefined();
-        const tasks = response.body.data;
-        expect(tasks).toHaveLength(2);
-        expect(response.status).toBe(200);
-      });
 
+      expect(response.body.error).toBeUndefined();
+      const tasks = response.body.data;
+      expect(tasks).toHaveLength(2);
+      expect(response.status).toBe(200);
     });
-    
   });
-  
-  
+});

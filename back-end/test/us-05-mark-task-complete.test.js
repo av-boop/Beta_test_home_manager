@@ -19,7 +19,7 @@ describe("US-05 - Marking a task complete", () => {
     return await knex.migrate.rollback(null, true).then(() => knex.destroy());
   });
 
-  describe("PUT /tasks/:task_id", () => {
+  describe("PUT /tasks/:id", () => {
     let task;
 
     beforeEach(async () => {
@@ -33,11 +33,11 @@ describe("US-05 - Marking a task complete", () => {
       const taskResponse = await request(app)
         .post("/tasks")
         .set("Accept", "application/json")
-        .send({data})
+        .send({ data });
       task = taskResponse.body.data;
     });
 
-    test("returns 404 for non-existent task_id", async () => {
+    test("returns 404 for non-existent id", async () => {
       const response = await request(app)
         .put("/tasks/99")
         .set("Accept", "application/json")
@@ -54,10 +54,12 @@ describe("US-05 - Marking a task complete", () => {
       const response = await request(app)
         .put(`/tasks/${task.id}`)
         .set("Accept", "application/json")
-        .send({ data: { 
-          ...task,
-          completed: true
-         } });
+        .send({
+          data: {
+            ...task,
+            completed: true,
+          },
+        });
 
       expect(response.body.error).toBeUndefined();
       expect(response.status).toBe(201);

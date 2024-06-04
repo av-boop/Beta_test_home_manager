@@ -19,7 +19,7 @@ describe("US-05 - Marking a task complete", () => {
     return await knex.migrate.rollback(null, true).then(() => knex.destroy());
   });
 
-  describe("PUT /tasks/:id", () => {
+  describe("PUT /tasks/:task_id", () => {
     let task;
 
     beforeEach(async () => {
@@ -37,7 +37,7 @@ describe("US-05 - Marking a task complete", () => {
       task = taskResponse.body.data;
     });
 
-    test("returns 404 for non-existent id", async () => {
+    test("returns 404 for non-existent task_id", async () => {
       const response = await request(app)
         .put("/tasks/99")
         .set("Accept", "application/json")

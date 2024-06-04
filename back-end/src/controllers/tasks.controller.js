@@ -55,7 +55,24 @@ async function updateTaskToCompleted(req, res, next) {
       });
     }
     const data = await service.updateTaskToCompleted(id);
-    res.status(201).json({ data });
+    console.log(data);
+    if (data.recurring) {
+      const { id, ...taskWithoutId } = data;
+      const newDueDate = new Date(data.due_date);
+
+      newDueDate.setDate(newDueDate.getDate() + data.recurring+1);
+      const newTask = {
+        ...taskWithoutId,
+        due_date: newDueDate,
+        completed: false,
+      };
+      const newData = await service.create(newTask);
+      console.log(newTask);
+      res.status(201).json({ data:newData });
+    }
+    else {
+      res.status(201).json({ data });
+    }
   } catch (error) {
     next(error);
   }

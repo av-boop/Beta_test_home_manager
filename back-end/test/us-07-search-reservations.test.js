@@ -44,7 +44,7 @@ describe("US-07 - Recurring tasks", () => {
           completed: true,
         });
       const incompleteTasksResponse = await request(app)
-        .get("/tasks?completed=false")
+        .get("/tasks?complete=false")
         .set("Accept", "application/json");
       expect(incompleteTasksResponse.statusCode).toEqual(200);
       const incompleteTasks = incompleteTasksResponse.body.data;

@@ -35,14 +35,11 @@ function filteredList(param) {
   return knex(tableName).select("*").where({ completed: param });
 }
 
-
 module.exports = {
   read,
   assignTask,
   create,
   updateTaskToCompleted,
   list,
-  filteredList
-
-
+  filteredList,
 };

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const controller = require("../controllers/tasks.controller");
+const controller = require("./tasks.controller");
 
 router.route("/:id/assign/:member_id").post(controller.assignTaskToMember);
 

@@ -3,8 +3,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const householdMembersRouter = require('../src/routers/householdMembers.router');
-const taskRouter = require("../src/routers/tasks.router");
+const householdMembersRouter = require('../src/household_member/household_member.router');
+const taskRouter = require("../src/tasks/tasks.router");
 
 app.use(cors());
 app.use(express.json());

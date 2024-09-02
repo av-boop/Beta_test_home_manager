@@ -1,5 +1,5 @@
-const service = require("../services/tasks.service");
-const householdService = require("../services/householdMembers.service");
+const service = require("./tasks.service");
+const householdService = require("../household_member/household_member.service");
 
 async function assignTaskToMember(req, res, next) {
   const { id, member_id } = req.params;
@@ -60,7 +60,7 @@ async function updateTaskToCompleted(req, res, next) {
       const { id, ...taskWithoutId } = data;
       const newDueDate = new Date(data.due_date);
 
-      newDueDate.setDate(newDueDate.getDate() + data.recurring+1);
+      newDueDate.setDate(newDueDate.getDate() + data.recurring + 1);
       const newTask = {
         ...taskWithoutId,
         due_date: newDueDate,
@@ -68,9 +68,8 @@ async function updateTaskToCompleted(req, res, next) {
       };
       const newData = await service.create(newTask);
       console.log(newTask);
-      res.status(201).json({ data:newData });
-    }
-    else {
+      res.status(201).json({ data: newData });
+    } else {
       res.status(201).json({ data });
     }
   } catch (error) {
@@ -103,12 +102,10 @@ async function list(req, res) {
   }
 }
 
-
 module.exports = {
   assignTaskToMember,
   create: [hasValidData, create],
   updateTaskToCompleted,
   read: [hasValidTaskId, read],
   list,
- 
 };

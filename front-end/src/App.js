@@ -1,6 +1,7 @@
 import React from "react";
-import { Route} from "react-router-dom";
-import Layout from "./layout/Layout";
+import Header from "./Component/Common/Header/Header";
+import Layout from "./Component/Layout";
+
 
 /**
  * Defines the root application component.
@@ -8,11 +9,16 @@ import Layout from "./layout/Layout";
  */
 function App() {
   return (
-    <switch>
-      <Route path="/">
-        <Layout />
-      </Route>
-    </switch>
+    <>
+      <Header />
+      <div className="container">
+        <main className="row">
+          <div className="col">
+            <Layout />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }
 

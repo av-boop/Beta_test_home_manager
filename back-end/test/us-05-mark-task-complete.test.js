@@ -33,7 +33,7 @@ describe("US-05 - Marking a task complete", () => {
       const taskResponse = await request(app)
         .post("/tasks")
         .set("Accept", "application/json")
-        .send({data})
+        .send({ data });
       task = taskResponse.body.data;
     });
 
@@ -54,10 +54,12 @@ describe("US-05 - Marking a task complete", () => {
       const response = await request(app)
         .put(`/tasks/${task.id}`)
         .set("Accept", "application/json")
-        .send({ data: { 
-          ...task,
-          completed: true
-         } });
+        .send({
+          data: {
+            ...task,
+            completed: true,
+          },
+        });
 
       expect(response.body.error).toBeUndefined();
       expect(response.status).toBe(201);

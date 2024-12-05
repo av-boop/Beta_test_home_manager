@@ -1,0 +1,137 @@
+[
+    {
+        "title": "Task 1",
+        "description": "Pay card bills",
+        "due_date": "2025-05-27",
+        "importance": "low",
+        "recurring": 4,
+        "assignee": 1,
+        "completed": false
+    },
+    {
+        "title": "Task 2",
+        "description": "Finish project report",
+        "due_date": "2025-06-15",
+        "importance": "high",
+        "recurring": 0,
+        "assignee": 2,
+        "completed": false
+    },
+    {
+        "title": "Task 3",
+        "description": "Schedule dentist appointment",
+        "due_date": "2025-07-05",
+        "importance": "medium",
+        "recurring": 12,
+        "assignee": 3,
+        "completed": false
+    },
+    {
+        "title": "Task 4",
+        "description": "Organize team meeting",
+        "due_date": "2025-06-20",
+        "importance": "medium",
+        "recurring": 1,
+        "assignee": null,
+        "completed": false
+    },
+    {
+        "title": "Task 5",
+        "description": "Renew gym membership",
+        "due_date": "2025-08-01",
+        "importance": "low",
+        "recurring": 6,
+        "assignee": 4,
+        "completed": false
+    },
+    {
+        "title": "Task 6",
+        "description": "Prepare presentation",
+        "due_date": "2025-06-18",
+        "importance": "high",
+        "recurring": 0,
+        "assignee": 5,
+        "completed": false
+    },
+    {
+        "title": "Task 7",
+        "description": "Buy groceries",
+        "due_date": "2025-06-12",
+        "importance": "low",
+        "recurring": 0,
+        "assignee": 6,
+        "completed": false
+    },
+    {
+        "title": "Task 8",
+        "description": "Submit tax returns",
+        "due_date": "2025-07-10",
+        "importance": "high",
+        "recurring": 0,
+        "assignee": 7,
+        "completed": false
+    },
+    {
+        "title": "Task 9",
+        "description": "Clean the house",
+        "due_date": "2025-06-22",
+        "importance": "medium",
+        "recurring": 2,
+        "assignee": null,
+        "completed": false
+    },
+    {
+        "title": "Task 10",
+        "description": "Update software",
+        "due_date": "2025-06-25",
+        "importance": "low",
+        "recurring": 0,
+        "assignee": 8,
+        "completed": false
+    },
+    {
+        "title": "Task 11",
+        "description": "Read new book",
+        "due_date": "2025-07-15",
+        "importance": "medium",
+        "recurring": 0,
+        "assignee": null,
+        "completed": false
+    },
+    {
+        "title": "Task 12",
+        "description": "Visit family",
+        "due_date": "2025-08-05",
+        "importance": "low",
+        "recurring": 0,
+        "assignee": 9,
+        "completed": false
+    },
+    {
+        "title": "Task 13",
+        "description": "Car maintenance",
+        "due_date": "2025-09-01",
+        "importance": "medium",
+        "recurring": 12,
+        "assignee": 10,
+        "completed": false
+    },
+    {
+        "title": "Task 14",
+        "description": "Plan vacation",
+        "due_date": "2025-06-30",
+        "importance": "high",
+        "recurring": 0,
+        "assignee": 11,
+        "completed": false
+    },
+    {
+        "title": "Task 15",
+        "description": "Backup files",
+        "due_date": "2025-06-14",
+        "importance": "medium",
+        "recurring": 1,
+        "assignee": 12,
+        "completed": false
+    }
+]

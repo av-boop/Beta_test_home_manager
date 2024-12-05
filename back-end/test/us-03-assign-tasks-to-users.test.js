@@ -34,7 +34,7 @@ describe("US-03 - Assigning tasks to users", () => {
         .send({ });
       expect(response.status).toBe(404);
     })
-    test("returns 200 if member and task both exist", async () => {
+    test("returns 201 if member and task both exist", async () => {
       let taskCreationResponse = await request(app)
         .post("/tasks")
         .set("Accept", "application/json")
@@ -56,6 +56,7 @@ describe("US-03 - Assigning tasks to users", () => {
             // than the member_name
           },
         });
+
       let response = await request(app)
         .post(
           `/tasks/${taskCreationResponse.body.data.id}/assign/${householdMemberCreationResponse.body.data.id}`
